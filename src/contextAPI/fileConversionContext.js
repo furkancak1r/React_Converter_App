@@ -5,42 +5,40 @@ const FileConversionContext = createContext();
 export const useFileConversion = () => useContext(FileConversionContext);
 
 export const FileConversionProvider = ({ children }) => {
+  const initialOptions = [
+    { from: 'JPEG', to: 'PNG', swapEnabled: true },
+    { from: 'PNG', to: 'JPEG', swapEnabled: true },
+    { from: 'JPEG', to: 'PDF', swapEnabled: false },
+    // Add more conversion types here.
+  ];
+
+  const uniqueFromTypes = Array.from(new Set(initialOptions.map(option => option.from)));
+
   const [conversions, setConversions] = useState({
     current: { from: 'JPEG', to: 'PNG' },
-    options: [
-      { from: 'JPEG', to: 'PNG', swapEnabled: true, multipleAllowed: false },
-      { from: 'PNG', to: 'JPEG', swapEnabled: true, multipleAllowed: false },
-      { from: 'JPEG', to: 'PDF', swapEnabled: false, multipleAllowed: true },
-
-      // Add more conversion types here.
-    ]
+    options: initialOptions,
+    fromTypes: uniqueFromTypes,
+    toOptions: initialOptions.filter(option => option.from === 'JPEG')
   });
 
   const swapConversion = () => {
     setConversions(prevConversions => {
-      // Mevcut 'from' ve 'to' değerlerinin tersini bul
-      const inverseIndex = prevConversions.options.findIndex(option =>
+      const inverseOption = prevConversions.options.find(option =>
         option.from === prevConversions.current.to &&
         option.to === prevConversions.current.from
       );
-  
-      // Eğer tersi varsa swap yap, yoksa mevcut dönüşümü koru
-      if (inverseIndex !== -1) {
-        return {
-          ...prevConversions,
-          current: prevConversions.options[inverseIndex]
-        };
-      }
-      return prevConversions;
+      return {
+        ...prevConversions,
+        current: inverseOption || prevConversions.current
+      };
     });
   };
-  
-  
 
-  const setConversion = (selectedConversion) => {
+  const setConversion = (from, to) => {
     setConversions(prevConversions => ({
       ...prevConversions,
-      current: selectedConversion
+      current: { from, to },
+      toOptions: prevConversions.options.filter(option => option.from === from)
     }));
   };
 

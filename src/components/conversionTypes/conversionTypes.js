@@ -1,4 +1,3 @@
-import React from 'react';
 import './conversionTypes.css';
 import { useFileConversion } from '../../contextAPI/fileConversionContext';
 import { FaExchangeAlt } from 'react-icons/fa';
@@ -7,18 +6,16 @@ export default function ConversionTypes() {
   const { conversions, swapConversion, setConversion } = useFileConversion();
 
   const handleFromChange = (event) => {
-    const selectedConversion = conversions.options.find(
-      (option) => option.from === event.target.value
-    );
-    setConversion(selectedConversion);
+    const from = event.target.value;
+    const firstToOption = conversions.options.find(option => option.from === from);
+    setConversion(from, firstToOption ? firstToOption.to : '');
   };
 
   const handleToChange = (event) => {
-    const selectedConversion = conversions.options.find(
-      (option) => option.to === event.target.value
-    );
-    setConversion(selectedConversion);
+    const to = event.target.value;
+    setConversion(conversions.current.from, to);
   };
+
   const isSwapDisabled = conversions.options.findIndex(option =>
     option.from === conversions.current.to &&
     option.to === conversions.current.from
@@ -29,8 +26,8 @@ export default function ConversionTypes() {
       <div className="row justify-content-center align-items-center">
         <div className="col-3 text-center file-box">
           <select className="form-select" value={conversions.current.from} onChange={handleFromChange}>
-            {conversions.options.map((option, index) => (
-              <option key={index} value={option.from}>{option.from}</option>
+            {conversions.fromTypes.map((from, index) => (
+              <option key={index} value={from}>{from}</option>
             ))}
           </select>
         </div>
@@ -42,11 +39,10 @@ export default function ConversionTypes() {
           >
             <FaExchangeAlt />
           </button>
-
         </div>
         <div className="col-3 text-center file-box">
           <select className="form-select" value={conversions.current.to} onChange={handleToChange}>
-            {conversions.options.map((option, index) => (
+            {conversions.toOptions.map((option, index) => (
               <option key={index} value={option.to}>{option.to}</option>
             ))}
           </select>

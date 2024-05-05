@@ -2,62 +2,110 @@ import React, { useCallback } from 'react';
 import { useFileConversion } from '../../contextAPI/fileConversionContext';
 import { useFileUpload } from '../../contextAPI/fileUploadContext';
 import { toast } from 'react-toastify';
-import { fileTypes } from '../constants/constants';
-import { jpegToPngApi } from '../../api/jpegToPngApi';
-import { pngToJpegApi } from '../../api/pngToJpegApi';
+import { jpegToPngApi, pngToJpegApi, jpegToPdfApi } from '../../api/api';
 
 const UserUpload = () => {
   const { conversions } = useFileConversion();
-  const { setUploadedFile, setUploadedFiles } = useFileUpload();
-  const acceptType = fileTypes[conversions.current.from];
+  const { setUploadedFiles } = useFileUpload();
 
-  const handleConversion = useCallback(async (file) => {
+  const handleFileUpload = useCallback(async (event) => {
+    const files = Array.from(event.target.files);
+    if (files.length === 0) {
+      toast.error("No files selected.");
+      return;
+    }
+
     try {
-      if (!file) {
-        toast.error('File not uploaded.');
-        return;
+      let responseData;
+      switch (`${conversions.current.from}_${conversions.current.to}`) {
+        case 'JPEG_PNG':
+          responseData = await jpegToPngApi(files);
+          if (Array.isArray(responseData)) {
+            downloadFiles(responseData);
+          } else {
+            console.error('Expected an array but got:', responseData);
+            return;
+          }
+          break;
+        case 'PNG_JPEG':
+          responseData = await pngToJpegApi(files);
+          if (Array.isArray(responseData)) {
+            downloadFiles(responseData);
+          } else {
+            console.error('Expected an array but got:', responseData);
+            return;
+          }
+          break;
+        case 'JPEG_PDF':
+          responseData = await jpegToPdfApi(files);
+          handlePdfDownload(responseData);
+          break;
+        default:
+          toast.error("Invalid conversion type.");
+          return;
       }
 
-      let response;
-      if (conversions.current.from === 'JPEG' && conversions.current.to === 'PNG') {
-        response = await jpegToPngApi(file);
-      } else if (conversions.current.from === 'PNG' && conversions.current.to === 'JPEG') {
-        response = await pngToJpegApi(file);
-      }
+      console.log("API response data:", responseData);
 
-      if (response) {
-        const blob = new Blob([response]);
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', `${file.name.split('.').slice(0, -1).join('.')}.${conversions.current.to.toLowerCase()}`);
-        document.body.appendChild(link);
-        link.click();
-      }
+      setUploadedFiles(responseData);
+      toast.success("Files uploaded and converted successfully.");
     } catch (error) {
-      toast.error('Error during conversion.');
+      console.error('Error during file conversion:', error);
+      toast.error(`Failed to convert files: ${error.message || error}`);
     }
-    // eslint-disable-next-line
-  }, [conversions.current.from, conversions.current.to]);
+  }, [conversions, setUploadedFiles]);
 
-  const handleFileUpload = async (event) => {
-    const files = event.target.files;
-    const currentOption = conversions.options.find(
-      option => option.from === conversions.current.from && option.to === conversions.current.to
-    );
 
-    if (currentOption.multipleAllowed && files.length > 1) {
-      setUploadedFiles(files);
-      toast.success('Multiple files uploaded successfully.');
-      // Handle multiple file conversion
-    } else if (!currentOption.multipleAllowed && files.length === 1) {
-      setUploadedFile(files[0]);
-      toast.success(`File successfully uploaded: ${files[0].name}`);
-      await handleConversion(files[0]);
-    } else {
-      toast.error(`Invalid operation. Please upload only one ${conversions.current.from} file.`);
+  const handlePdfDownload = (pdfData) => {
+    if (!pdfData || !pdfData[0] || !pdfData[0].data) {
+      console.error('Invalid or empty PDF data:', pdfData);
+      toast.error("PDF document could not be loaded.");
+      return;
     }
+  
+    // Convert the received array data into a Uint8Array
+    const arrayBuffer = new Uint8Array(pdfData[0].data).buffer;
+    const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
+  
+    // Create a URL for the blob and initiate a download
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `converted-file-${Date.now()}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  
+    console.log('PDF download initiated successfully.');
   };
+  
+  
+
+  const downloadFiles = (files) => {
+    if (!files || !Array.isArray(files)) {
+      console.error('Invalid or empty files array:', files);
+      return;
+    }
+
+    files.forEach((file, index) => {
+      // Assuming file.data is an array containing the byte values
+      const arrayBuffer = new Uint8Array(file.data).buffer;
+      const blob = new Blob([arrayBuffer], { type: 'image/png' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `converted-file-${index + 1}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    });
+  };
+
+
+
+  const acceptType = `image/${conversions.current.from.toLowerCase()}`;
 
   return (
     <div className="row justify-content-center mt-4">
@@ -66,12 +114,12 @@ const UserUpload = () => {
           type="file"
           id="fileInput"
           accept={acceptType}
-          multiple={conversions.current.multipleAllowed}  // Dinamik olarak multiple özelliğini ayarla
           onChange={handleFileUpload}
+          multiple
           hidden
         />
         <label htmlFor="fileInput" className="btn btn-outline-dark">
-          {`${conversions.current.from} File Upload`}
+          Upload {conversions.current.from} Files
         </label>
       </div>
     </div>

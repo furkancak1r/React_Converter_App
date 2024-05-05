@@ -5,17 +5,17 @@ const FileUploadContext = createContext();
 export const useFileUpload = () => useContext(FileUploadContext);
 
 export const FileUploadProvider = ({ children }) => {
-  const [uploadedFile, setUploadedFile] = useState(null); // State'i ve setter'ı oluşturduk
+  const [uploadedFiles, setUploadedFiles] = useState([]); // Initialize state as an array
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setUploadedFile(file); // State'i güncelleyen setter fonksiyonunu kullandık
+    const files = Array.from(event.target.files); // Convert FileList to array
+    if (files.length) {
+      setUploadedFiles(files); // Set the array of files
     }
   };
 
   return (
-    <FileUploadContext.Provider value={{ uploadedFile, setUploadedFile, handleFileChange }}>
+    <FileUploadContext.Provider value={{ uploadedFiles, setUploadedFiles, handleFileChange }}>
       {children}
     </FileUploadContext.Provider>
   );
