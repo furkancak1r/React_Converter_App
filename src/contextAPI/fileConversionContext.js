@@ -23,16 +23,25 @@ export const FileConversionProvider = ({ children }) => {
 
   const swapConversion = () => {
     setConversions(prevConversions => {
+      // Find the inverse conversion where the current "to" becomes "from" and "from" becomes "to"
       const inverseOption = prevConversions.options.find(option =>
         option.from === prevConversions.current.to &&
         option.to === prevConversions.current.from
       );
+  
+      if (!inverseOption) {
+        console.error("No inverse conversion found.");
+        return prevConversions; // Return previous state if no inverse is found
+      }
+  
       return {
         ...prevConversions,
-        current: inverseOption || prevConversions.current
+        current: inverseOption,
+        toOptions: prevConversions.options.filter(option => option.from === inverseOption.from)
       };
     });
   };
+  
 
   const setConversion = (from, to) => {
     setConversions(prevConversions => ({
