@@ -24,7 +24,7 @@ export default function ConversionTypes() {
   return (
     <div className="container">
       <div className="row justify-content-center align-items-center">
-        <div className="col-3 text-center file-box">
+        <div className="col-4 text-center file-box">
           <select className="form-select" value={conversions.current.from} onChange={handleFromChange}>
             {conversions.fromTypes.map((from, index) => (
               <option key={index} value={from}>{from}</option>
@@ -40,7 +40,7 @@ export default function ConversionTypes() {
             <FaExchangeAlt />
           </button>
         </div>
-        <div className="col-3 text-center file-box">
+        <div className="col-4 text-center file-box">
           <select className="form-select" value={conversions.current.to} onChange={handleToChange}>
             {conversions.toOptions.map((option, index) => (
               <option key={index} value={option.to}>{option.to}</option>
