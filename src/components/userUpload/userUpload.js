@@ -110,7 +110,7 @@ const UserUpload = () => {
   });
 
   return (
-    <div {...getRootProps()} className="upload-container" style={{ width: '100%', height: '100vh', border: isDragActive ? '2px dashed green' : 'none' }}>
+    <div {...getRootProps()} className="upload-container" style={{ width: '100%', height: '100%', border: isDragActive ? '2px dashed green' : 'none' }}>
       <div className="row justify-content-center mt-4">
         <div className="col-auto">
           <input

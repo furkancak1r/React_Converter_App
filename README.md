@@ -1,6 +1,15 @@
-# Getting Started with Create React App
+# AI Converter Pro
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the repository for AI Converter Pro, the ultimate tool for converting your images between various formats with ease. This web application allows users to convert JPEG to PDF, PNG to JPEG, and JPEG to PNG quickly and securely.
+
+## Features
+
+- **Convert JPEG to PDF**: Transform your JPEG files into PDF documents with just a few clicks.
+- **Convert PNG to JPEG**: Easily convert PNG images to JPEG format for better compatibility.
+- **Convert JPEG to PNG**: Change JPEG images into PNG format to benefit from lossless compression.
+- **Drag and Drop Uploads**: Conveniently upload files by dragging and dropping them into the browser window.
+- **Batch Conversion**: Convert multiple files at once to save time.
+- **Secure Processing**: Your files are securely processed and not stored, ensuring privacy and security.
 
 ## Available Scripts
 
@@ -14,10 +23,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 

@@ -1,0 +1,63 @@
+#logo {
+    width: 200px;
+    /* Logo genişliği */
+    height: 100px;
+    /* Logo yüksekliği */
+    position: absolute;
+    /* Pozisyon türünü absolute olarak değiştir */
+    top: 10px;
+    /* Üstten boşluk */
+    left: 10px;
+    /* Soldan boşluk */
+}
+
+/* Tüm sayfa için arkaplan rengini ayarlar */
+body {
+    background-color: #F5F5F5;
+    /* Açık gri tonu */
+    margin: 0;
+    /* Varsayılan marjları kaldırır */
+    padding: 0;
+    /* Varsayılan padding'leri kaldırır */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* HTML elementi için tam genişlik ve yükseklik ayarlar */
+html {
+    height: 100%;
+    width: 100%;
+}
+
+/* Uygulamanın ana container'ı için stil tanımı */
+#root {
+    min-height: 100%;
+    /* Root div'in sayfa yüksekliğini kaplamasını sağlar */
+    display: flex;
+    flex-direction: column;
+}
+
+.main-title {
+    font-size: 2em;
+    /* Başlık boyutunu büyüt */
+    color: #2C3E50;
+    /* Başlık rengi */
+    margin-bottom: 0.5em;
+    /* Alt boşluk */
+}
+
+.description {
+    font-size: 1.2em;
+    /* Açıklama metni boyutu */
+    color: #34495E;
+    /* Açıklama metni rengi */
+    margin-bottom: 2em;
+    /* Alt boşluk */
+}
+
+.upload-instruction {
+    font-size: 0.8em;
+    /* Küçük metin boyutu */
+    color: #707070;
+    /* Gri tonunda bir renk, metni daha az baskın yapar */
+    margin-top: -1em;
+}
