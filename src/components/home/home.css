@@ -1,14 +1,20 @@
 #logo {
-    width: 200px;
-    /* Logo genişliği */
-    height: 100px;
-    /* Logo yüksekliği */
-    position: absolute;
-    /* Pozisyon türünü absolute olarak değiştir */
-    top: 10px;
-    /* Üstten boşluk */
-    left: 10px;
-    /* Soldan boşluk */
+    width: 20vw; /* Logo width as a percentage of the viewport width */
+    height: auto; /* Maintain aspect ratio */
+    position: absolute; /* Keep position absolute */
+    top: 10px; /* Space from the top */
+    left: 10px; /* Space from the left */
+    max-width: 200px; /* Maximum width of the logo */
+}
+
+/* Adjust logo size for smaller screens */
+@media (max-width: 768px) {
+    #logo {
+        width: 20vw; /* Smaller logo on smaller screens */
+        top: 5px; /* Less space from the top */
+        left: 5px; /* Less space from the left */
+        max-width: 100px; /* Adjust maximum width for small devices */
+    }
 }
 
 /* Tüm sayfa için arkaplan rengini ayarlar */
@@ -20,12 +26,14 @@ body {
     padding: 0;
     /* Varsayılan padding'leri kaldırır */
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    
 }
 
 /* HTML elementi için tam genişlik ve yükseklik ayarlar */
 html {
     height: 100%;
     width: 100%;
+    
 }
 
 /* Uygulamanın ana container'ı için stil tanımı */
@@ -34,6 +42,7 @@ html {
     /* Root div'in sayfa yüksekliğini kaplamasını sağlar */
     display: flex;
     flex-direction: column;
+    
 }
 
 .main-title {
@@ -54,10 +63,3 @@ html {
     /* Alt boşluk */
 }
 
-.upload-instruction {
-    font-size: 0.8em;
-    /* Küçük metin boyutu */
-    color: #707070;
-    /* Gri tonunda bir renk, metni daha az baskın yapar */
-    margin-top: -1em;
-}

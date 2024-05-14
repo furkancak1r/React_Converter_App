@@ -1,0 +1,8 @@
+.upload-instruction {
+    font-size: 0.8em;
+    /* Küçük metin boyutu */
+    color: #707070;
+    /* Gri tonunda bir renk, metni daha az baskın yapar */
+    margin-top: -1em;
+}
+
