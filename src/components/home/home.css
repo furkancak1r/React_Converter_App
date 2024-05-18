@@ -48,18 +48,33 @@ html {
 .main-title {
     font-size: 2em;
     /* Başlık boyutunu büyüt */
-    color: #2C3E50;
+    color: whitesmoke;
     /* Başlık rengi */
     margin-bottom: 0.5em;
+    padding: 0.3em;
     /* Alt boşluk */
+    background-color: #2596be;
 }
 
 .description {
-    font-size: 1.2em;
+    font-size: 0.9em;
     /* Açıklama metni boyutu */
-    color: #34495E;
+    color: black;
     /* Açıklama metni rengi */
     margin-bottom: 2em;
     /* Alt boşluk */
 }
 
+#conversion-image{
+    width: 25%;
+    /* Resmi genişliğe sığdır */
+    height: auto;
+    /* Oranı koru */
+    margin-bottom: 2em;
+    /* Alt boşluk */
+}
+
+#footer{
+    background-color: #2596be;
+    padding: 0.3em;
+}

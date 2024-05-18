@@ -36,18 +36,20 @@ export default function Home() {
         <p className="text-center description">
           Our tool not only delivers superior quality results but also offers flexibility in managing file compatibility and size, making it perfect for web development, printing, or personal storage. With a focus on ease of use, our platform allows you to convert files quickly and easily, without any need for in-depth technical knowledge. You can batch convert numerous files simultaneously, saving you time and effort in your busy schedule.
         </p>
+        <img src="conversion1.png" alt="conversionImage" id='conversion-image' />
+
         <p className="text-center description">
           Additionally, our conversion tool supports various adjustments such as resolution scaling and color management, providing you with full control over the final output of your images and documents. Whether you're preparing a presentation, optimizing images for your website, or archiving important documents, our converter ensures that you receive optimal results tailored to your specific requirements.
         </p>
         <p className="text-center description">
           Experience the convenience and reliability of our online converter today, and streamline your workflow with our expertly designed service. Convert your files with confidence, knowing that you're using one of the best tools available for maintaining the integrity and quality of your digital assets.
         </p></div>
-      <div className="row justify-content-center mt-3 mb-5">
-      <div className="col-6 text-center">
-          <Link to="/frequently-asked-questions" className="text-center description" style={{ textDecoration: 'underline' }}>Frequently Asked Questions (FAQ)</Link>
+      <div className="row justify-content-center mt-3 mb-5" id="footer">
+        <div className="col-6 text-center">
+          <Link to="/frequently-asked-questions" className="text-center description" style={{ textDecoration: 'underline',color:'whitesmoke' }}>Frequently Asked Questions (FAQ)</Link>
         </div>
         <div className="col-6 text-center">
-          <Link to="/privacy-policy" className="text-center description" style={{ textDecoration: 'underline' }}>Privacy Policy</Link>
+          <Link to="/privacy-policy" className="text-center description" style={{ textDecoration: 'underline',color:'whitesmoke' }}>Privacy Policy</Link>
         </div>
       </div>
     </div>
